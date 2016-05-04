@@ -16,7 +16,7 @@
   String.prototype.toUpper = function () {
     var word = this;
 
-    //Convert to uppercase by converting to and from ASCII subtract 32
+    // Convert to uppercase by converting to and from ASCII subtract 32
     return word.replace(/[a-z]/g, function (letter) {
       return String.fromCharCode(letter.charCodeAt() - 32);
     });
@@ -28,7 +28,7 @@
    */
   String.prototype.toLower = function () {
     var word = this;
-    //Convert to uppercase by converting to and from ASCII add 32
+    // Convert to uppercase by converting to and from ASCII add 32
     return word.replace(/[A-Z]/g, function (letter) {
       return String.fromCharCode(letter.charCodeAt() + 32);
     });
@@ -52,13 +52,7 @@
    * @return {Boolean} If Question return apprioprate Boolean
    */
   String.prototype.isQuestion = function () {
-    var word = this,
-        questionRegex = /\?$/;
-    if (questionRegex.test(word.trim())) {
-      return true;
-    } else {
-      return false;
-    }
+    return /.+\?$/.test(this.trim());
   };
 
   /**
@@ -66,13 +60,11 @@
    * @return {[String]} The splitted words
    */
   String.prototype.words = function () {
-    var word = this;
-    word = word.split(/\s/);
-    //Check if its an empty string
-    if (word[0] === '') {
-      return [];
-    }
-    return word;
+    var words = this.replace(/[+-=?><)(*&^!^%@'"]/g, '');
+    // Remove excess space
+    words = words.replace(/ +/g, ' ').split(/\s/);
+    // Check if its an empty string
+    return words[0] ? words : [];
   };
 
   /**
@@ -88,25 +80,15 @@
    * @return {String} String representation of currency
    */
   String.prototype.toCurrency = function () {
-    var amount = this.trim(),
-        decimalPointIndex = amount.indexOf('.'),
-        point;
-
-    if (!amount.match(/^[0-9,.]+$/)) {
+    if (!/^[\d,.]+$/.test(this)) {
       return NaN;
     }
-    if (decimalPointIndex === -1) {
-      point = amount.length;
-    } else {
-      point = decimalPointIndex;
-    }
-    amount = parseFloat(amount).toString().split('');
-    //Condition in while loop checks if there is atleast 4 figures left
-    while ((point - 4) >= 0) {
-      point -= 3;
-      amount.splice(point, 0, ',');
-    }
-    return amount.join('');
+
+    var number  = parseFloat(this).toString();
+    number = number.split('.'); 
+    number[0] = number[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+    return number.join('.');
   };
 
   /**
@@ -114,10 +96,9 @@
    * @return {mixed} Int or Float of Currency
    */
   String.prototype.fromCurrency = function () {
-    var amount = this;
+    var amount;
 
-    amount = amount.replace(/[$,]/g, '');
-    amount = parseFloat(amount);
+    amount = parseFloat(this.replace(/[$,]/g, ''));
     return amount;
   };
 })();

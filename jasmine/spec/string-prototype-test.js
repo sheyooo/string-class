@@ -60,22 +60,11 @@ describe('String Prototype Test', function () {
       expect('ab'.ucFirst()).toEqual('Ab');
       expect('master of javascript'.ucFirst()).toEqual('Master of javascript');
     });
-
-    it('lowerCase words', function () {
-      expect('abraham'.ucFirst()).toEqual('Abraham');
-      expect('low case'.ucFirst()).toEqual('Low case');
-      expect('peter'.ucFirst()).toEqual('Peter');
-      expect(''.ucFirst()).toEqual('');
-      expect('a'.ucFirst()).toEqual('A');
-      expect('ab'.ucFirst()).toEqual('Ab');
-      expect('master of javascript'.ucFirst()).toEqual('Master of javascript');
-    });
   });
 
   describe('IS QUESTION isQuestion()', function () {
     it('If string is a question', function () {
       expect('Are you alright?'.isQuestion()).toBe(true);
-      expect('?'.isQuestion()).toBe(true);
       expect('Do you know me?'.isQuestion()).toBe(true);
       expect('Do I know you? '.isQuestion()).toBe(true);
     });
@@ -84,6 +73,7 @@ describe('String Prototype Test', function () {
       expect('Are you alright'.isQuestion()).toBe(false);
       expect('I am flash'.isQuestion()).toBe(false);
       expect(''.isQuestion()).toBe(false);
+      expect('?'.isQuestion()).toBe(false);
       expect('Do I know you '.isQuestion()).toBe(false);
     });
   });
@@ -92,11 +82,13 @@ describe('String Prototype Test', function () {
     it('words() method should work correctly', function () {
       expect('All these songs for you'.words())
         .toEqual(['All', 'these', 'songs', 'for', 'you']);
-      expect('Are you alright?'.words()).toEqual(['Are', 'you', 'alright?']);
+      expect('Are you alright?'.words()).toEqual(['Are', 'you', 'alright']);
+      expect('Are you ?-*()!>%^@"\'= alright?'.words()).toEqual(['Are', 'you', 'alright']);
       expect('I am not your mate'.words())
         .toEqual(['I', 'am', 'not', 'your', 'mate']);
       expect('I will never give up on you'.words())
         .toEqual(['I', 'will', 'never', 'give', 'up', 'on', 'you']);
+      expect(''.words()).toEqual([]);
     });
   });
 
