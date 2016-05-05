@@ -83,7 +83,8 @@ describe('String Prototype Test', function () {
       expect('All these songs for you'.words())
         .toEqual(['All', 'these', 'songs', 'for', 'you']);
       expect('Are you alright?'.words()).toEqual(['Are', 'you', 'alright']);
-      expect('Are you ?-*()!>%^@"\'= alright?'.words()).toEqual(['Are', 'you', 'alright']);
+      expect('Are you ?-*()!>%^@"\'= alright?'.words())
+        .toEqual(['Are', 'you', 'alright']);
       expect('I am not your mate'.words())
         .toEqual(['I', 'am', 'not', 'your', 'mate']);
       expect('I will never give up on you'.words())
